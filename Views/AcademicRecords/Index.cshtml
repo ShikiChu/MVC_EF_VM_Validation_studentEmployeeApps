@@ -1,0 +1,50 @@
+﻿@model IEnumerable<StudentAndEmployeeAppsMVC.Models.DataAccess.AcademicRecord>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-orderBy="course" asp-controller="AcademicRecords">@Html.DisplayNameFor(model => model.CourseCodeNavigation)</a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Grade)
+            </th>
+            <th>
+                <a asp-action="EditAll" asp-controller="AcademicRecords">Edit All</a> @*when click, send httpGet EditAll*@
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                 @Html.DisplayFor(modelItem => item.CourseCodeNavigation.Code) -  @Html.DisplayFor(modelItem => item.CourseCodeNavigation.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.NameWithId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Grade)
+            </td>
+            <td>
+                
+                @Html.ActionLink("Edit", "Edit", new { id = item.StudentId, code=item.CourseCode }) | @*alternative: <a asp-action="Edit" asp-route-id="@item.StudentId" asp-route-code="@item.CourseCode">Edit</a>*@
+                @Html.ActionLink("See Details", "Details", new { id = item.StudentId }) |@* alternative: <a asp-action="Details" asp-route-id="@item.StudentId">Detail</a> *@
+                @Html.ActionLink("Delete", "Delete", new { id=item.StudentId}) @*<a asp-action="Delete" asp-route-id="@item.StudentId">AltDelete</a>*@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

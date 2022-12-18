@@ -1,0 +1,54 @@
+﻿@model IList<StudentAndEmployeeAppsMVC.Models.DataAccess.AcademicRecord>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<form asp-controller="AcademicRecords" asp-action="EditAll" method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <a asp-action="EditAll" asp-route-orderBy="course" asp-controller="AcademicRecords">Course</a>
+                    @*@Html.ActionLink("Course", "EditAll", new { orderBy = "course" })*@
+                </th>
+                <th>
+                    @Html.ActionLink("Student", "EditAll", new { orderby = "name"})
+                </th>
+                <th>
+                    Grade
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(int i =0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model[i].CourseCodeNavigation.Code) -  @Html.DisplayFor(modelItem => Model[i].CourseCodeNavigation.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model[i].Student.NameWithId)
+                    </td>
+                    <td>
+                        <input asp-for="@Model[i].CourseCode" type="hidden" />
+                        <input asp-for="@Model[i].StudentId" type="hidden" />
+                        <input asp-for="@Model[i].Grade" type="number" />
+                        <span asp-validation-for="@Model[i].Grade" class="text-danger"></span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+        <a asp-action="Index"  class="btn btn-primary">Cancel</a>
+    </div>
+</form>
+
